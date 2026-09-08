@@ -1,0 +1,38 @@
+volumes:
+  pg_data:
+  static:
+
+services:
+  db:
+    image: postgres:13.10
+    env_file: .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  backend:
+    # build: ./backend/
+    image: olshanskyvv/taski-backend:latest
+    env_file: .env
+    volumes:
+      - static:/backend_static
+    depends_on:
+      - db
+
+  frontend:
+    env_file: .env
+    # build: ./frontend/
+    image: olshanskyvv/taski-frontend:latest
+    volumes:
+      - static:/frontend_static
+    command: cp -r /app/build/. /frontend_static/
+
+  gateway:
+    # build: ./gateway/
+    image: olshanskyvv/taski-gateway:latest
+    depends_on:
+      - backend
+      - frontend
+    volumes:
+      - static:/staticfiles
+    ports:
+      - 8000:80
