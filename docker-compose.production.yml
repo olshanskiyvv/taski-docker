@@ -11,7 +11,7 @@ services:
 
   backend:
     # build: ./backend/
-    image: olshanskyvv/taski-backend:latest
+    image: olshanskyvv/taski_backend:latest
     env_file: .env
     volumes:
       - static:/backend_static
@@ -21,14 +21,14 @@ services:
   frontend:
     env_file: .env
     # build: ./frontend/
-    image: olshanskyvv/taski-frontend:latest
+    image: olshanskyvv/taski_frontend:latest
     volumes:
       - static:/frontend_static
     command: cp -r /app/build/. /frontend_static/
 
   gateway:
     # build: ./gateway/
-    image: olshanskyvv/taski-gateway:latest
+    image: olshanskyvv/taski_gateway:latest
     depends_on:
       - backend
       - frontend
