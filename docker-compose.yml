@@ -4,6 +4,7 @@ volumes:
 
 services:
   db:
+    restart: always
     image: postgres:13.10
     env_file: .env
     volumes:
@@ -15,6 +16,7 @@ services:
       retries: 10
 
   backend:
+    restart: always
     build: ./backend/
     env_file: .env
     volumes:
@@ -31,6 +33,7 @@ services:
     command: cp -r /app/build/. /frontend_static/
 
   gateway:
+    restart: always
     build: ./gateway/
     depends_on:
       - backend

@@ -4,6 +4,7 @@ volumes:
 
 services:
   db:
+    restart: always
     image: postgres:13.10
     env_file: .env
     volumes:
@@ -15,6 +16,7 @@ services:
       retries: 10
 
   backend:
+    restart: always
     # build: ./backend/
     image: olshanskyvv/taski_backend:latest
     env_file: .env
@@ -33,6 +35,7 @@ services:
     command: cp -r /app/build/. /frontend_static/
 
   gateway:
+    restart: always
     # build: ./gateway/
     image: olshanskyvv/taski_gateway:latest
     depends_on:
